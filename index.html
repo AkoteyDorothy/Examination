@@ -30,7 +30,7 @@
 
         <!--Assets Management System-->
 
-        <a-assets timeout="10000">
+        <a-assets timeout="30000">
 
             <img src="texture/evening-sky-blue-night-sky-with-clouds_578102-712.jpg" id="sky">
 
@@ -49,9 +49,6 @@
             <img src="texture/chinese_roofing.jpeg" id="roofing">
 
             <img src="texture/golden_marble.jpeg" id="marble">
-
-            <!-- Water texture for animated pool -->
-            <img src="texture/water_texture.jpg" id="water">
 
             <!-- glTF Models from respective folders -->
             <a-asset-item src="model/modern/scene.gltf" id="mm"></a-asset-item>
@@ -78,7 +75,7 @@
 
         <!-- Animated Swimming Pool with Water Waves -->
         <a-plane position="-15 4 -15" rotation="-90 0 0" width="8" height="12" 
-                 material="src:#water; transparent: true; opacity: 0.8; repeat: 4 6"
+                 material="color: #4A90E2; transparent: true; opacity: 0.8; repeat: 4 6"
                  animation="property: material.offset; to: 0 1; dur: 3000; dir: alternate; loop: true"></a-plane>
 
 
