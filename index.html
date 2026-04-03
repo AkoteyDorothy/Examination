@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Dream House</title>
+
+<script src="SCRIPT/aframe.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.4.0/dist/aframe-extras.min.js"></script>
+
+<script>
+    function teleportToBalcony() {
+        var camera = document.querySelector('a-camera');
+        camera.setAttribute('position', '-35 8 -8');
+        camera.setAttribute('rotation', '0 90 0');
+    }
+</script>
+
+</head>
+
+<body style="background: #87CEEB;">
+
+    <a-scene renderer="antialias: true; colorManagement: true;" shadow="type: basic" fog="type: linear; color: #ced4da; near: 150; far: 300">
+
+        <!--Assets Management System-->
+
+        <a-assets timeout="10000">
+
+            <img src="texture/evening-sky-blue-night-sky-with-clouds_578102-712.jpg" id="sky">
+
+            <img src="texture/Grass_10_baseColor.jpeg" id="grass">
+
+            <img src="texture/Grass_10_specularf0.png" id="rgb">
+
+            <img src="texture/Pavers_with_Grass_Herringbone_baseColor.jpeg" id="pavement">
+
+            <img src="texture/39_white_and_brown_marble_tile_baseColor.jpeg" id="tile">
+
+            <img src="texture/Seamless_wall_white_paint_stucco_plaster_texture_9_baseColor.jpeg" id="cracked">
+
+            <img src="texture/101_wooden_slats_pbr_texture-seamless_baseColor.jpeg" id="slat">
+
+            <img src="texture/chinese_roofing.jpeg" id="roofing">
+
+            <img src="texture/golden_marble.jpeg" id="marble">
+
+            <!-- Water texture for animated pool -->
+            <img src="texture/water_texture.jpg" id="water">
+
+            <!-- glTF Models from respective folders -->
+            <a-asset-item src="model/modern/scene.gltf" id="mm"></a-asset-item>
+
+            <a-asset-item src="model/pool/scene.gltf" id="pool"></a-asset-item>
+            <a-asset-item src="model/good/scene.gltf" id="good"></a-asset-item>
+
+            <a-asset-item src="model/iron_gate/scene.gltf" id="gate"></a-asset-item>
+            <a-asset-item src="model/2021_lamborghini_countach_lpi_800-4/scene.gltf" id="lamborghini"></a-asset-item>
+            <a-asset-item src="model/balcony/scene.gltf" id="balcony"></a-asset-item>
+            <a-asset-item src="model/stylized_tree/scene.gltf" id="tree"></a-asset-item>
+
+            <!-- Street Lamp Models -->
+            <a-asset-item src="model/street_lamp/scene.gltf" id="street"></a-asset-item>
+            <a-asset-item src="model/lux_lamp/scene.gltf" id="lux"></a-asset-item>
+            <a-asset-item src="model/circle_lamp/scene.gltf" id="circle"></a-asset-item>
+
+        </a-assets>
+
+
+
+        <!-- Matching Sky-Fog Color for Infinite World -->
+        <a-sky material="shader: gradient; topColor: #1e3c72; bottomColor: #ced4da; offset: 0.5"></a-sky>
+
+        <!-- Animated Swimming Pool with Water Waves -->
+        <a-plane position="-15 4 -15" rotation="-90 0 0" width="8" height="12" 
+                 material="src:#water; transparent: true; opacity: 0.8; repeat: 4 6"
+                 animation="property: material.offset; to: 0 1; dur: 3000; dir: alternate; loop: true"></a-plane>
+
+
+        <!-- Enhanced Ground with Shadow Reception -->
+        <a-plane position="0 3 0" rotation="-90 0 0" width="1000" height="1000" 
+                 material="src:#grass; normal-map: #rgb; normal-texture-repeat: 800 800; repeat: 800 800; roughness: 0.9; metalness: 0.1"
+                 shadow="receive: true"></a-plane>
+        
+        <!-- Wide Stone Pathway from Gate to Villa Entrance -->
+        <a-plane position="0 3.1 35" rotation="-90 0 0" width="8" height="70" 
+                 material="src:#pavement; repeat: 8 14; roughness: 0.9"></a-plane>
+        
+        <!-- Stone Pathway to Car -->
+        <a-plane position="25 3.05 15" rotation="-90 0 90" width="4" height="30" 
+                 material="src:#pavement; repeat: 6 6; roughness: 0.9"></a-plane>
+
+        <!-- Compound -->
+
+        <a-plane scale="80 60 1" repeat="50 50" position="20 3.1 -10" rotation="-90 0 0" src="#pavement"></a-plane>
+
+        <!--Interactive Iron Gate with Click Animation -->
+        <a-entity gltf-model="#gate" id="gate-entity" position="0 4.3 50" scale="0.8 0.8 0.8" 
+                 shadow="cast: true; receive: true"
+                 animation__open="property: rotation; to: 0 0 0; dur: 2000; startEvents: click; easing: easeInOutQuad"></a-entity>
+        
+        <!--Swimming Pool Model - In Front of Gate for Testing-->
+        <a-entity gltf-model="#pool" position="0 4 75" scale="1 1 1"></a-entity>
+
+        <!-- Complete Perimeter Wall - Property Enclosure -->
+        <!-- Left border -->
+        <a-box position="-50 1 0" src="#slat" repeat="20 6" width="0.2" height="10" depth="100" 
+               material="roughness: 0.8; metalness: 0.1" shadow="cast: true; receive: true"></a-box>
+        
+        <!-- Right border -->
+        <a-box position="50 1 0" src="#slat" repeat="20 6" width="0.2" height="10" depth="100" 
+               material="roughness: 0.8; metalness: 0.1" shadow="cast: true; receive: true"></a-box>
+        
+        <!-- Back border -->
+        <a-box position="0 1 -50" src="#slat" repeat="20 6" width="100" height="10" depth="0.2" 
+               material="roughness: 0.8; metalness: 0.1" shadow="cast: true; receive: true"></a-box>
+        
+        <!-- Front fence with gate opening - Enclosed Rectangle -->
+        <a-box position="-25 1 50" src="#slat" repeat="10 6" width="33" height="10" depth="0.2" 
+               material="roughness: 0.8; metalness: 0.1" shadow="cast: true; receive: true"></a-box>
+        <a-box position="25 1 50" src="#slat" repeat="10 6" width="33" height="10" depth="0.2" 
+               material="roughness: 0.8; metalness: 0.1" shadow="cast: true; receive: true"></a-box>
+
+        <!-- Interactive Camera Behind Gate - Full Property View -->
+        <a-entity position="0 5 85" rotation="0 0 0">
+            <a-camera active="true" fov="80" near="0.1" far="1000" cursor="rayOrigin: mouse">
+                <a-cursor></a-cursor>
+            </a-camera>
+        </a-entity>
+
+        <!--Text Display - Name Tag in Sky Left (Raised Higher)-->
+        <a-text value="AKOTEY DOROTHY\nFCM.41.020.017.24\nIS2" 
+
+                position="-15 20 -15" 
+
+                color="white" 
+
+                width="15" 
+
+                align="center"
+
+                font="kelsonsans"
+
+                side="double"></a-text>
+
+        <!--Villa - Modern House with Glass Windows -->
+        <a-entity gltf-model="#mm" position="10 3 15" scale="10 10 10" 
+                 material="color: #F5F5F5; metalness: 0.1; roughness: 0.8; envMap: #sky; envMapIntensity: 0.8"
+                 shadow="cast: true; receive: true"></a-entity>
+        
+        <!-- Interior Room Labels -->
+        <a-text value="Master Bedroom" position="5 8 20" color="white" width="8" align="center" font="kelsonsans" side="double"></a-text>
+        <a-text value="Living Area" position="15 8 20" color="white" width="8" align="center" font="kelsonsans" side="double"></a-text>
+        <a-text value="Kitchen" position="10 8 30" color="white" width="8" align="center" font="kelsonsans" side="double"></a-text>
+
+        <!--Balcony with Realistic Swimming Pool -->
+        <a-entity gltf-model="#balcony" position="-40 3.5 15" scale="1 1 1" rotation="0 0 0"></a-entity>
+        
+        <!-- Balcony Pool Water Surface -->
+        <a-plane position="-40 5.5 15" rotation="-90 0 0" width="6" height="4" 
+                 material="color: #00f2ff; opacity: 0.8; transparent: true; metalness: 1; roughness: 0; emissive: #00ffff; emissiveIntensity: 0.5"
+                 animation="property: position; to: -40 5.52 15; dur: 3000; dir: alternate; loop: true"
+                 shadow="cast: true; receive: true"
+                 id="balcony-pool" class="clickable" onclick="teleportToBalcony()"></a-plane>
+        
+        <!-- Pool Floor with Tile Texture -->
+        <a-box position="-40 5.4 15" rotation="-90 0 0" width="6.2" height="4.2" depth="0.1" 
+                 src="#tile" repeat="4 3" material="roughness: 0.7" 
+                 shadow="cast: true; receive: true"></a-box>
+        
+        <!-- Glass Railing Around Pool -->
+        <a-box position="-43 5.5 15" width="0.1" height="1" depth="4.2" 
+                 material="color: #ffffff; opacity: 0.2; transparent: true"></a-box>
+        <a-box position="-37 5.5 15" width="0.1" height="1" depth="4.2" 
+                 material="color: #ffffff; opacity: 0.2; transparent: true"></a-box>
+        <a-box position="-40 5.5 13" width="6" height="1" depth="0.1" 
+                 material="color: #ffffff; opacity: 0.2; transparent: true"></a-box>
+        <a-box position="-40 5.5 17" width="6" height="1" depth="0.1" 
+                 material="color: #ffffff; opacity: 0.2; transparent: true"></a-box>
+        
+        <!-- Balcony Pool Night Light -->
+        <a-light type="point" color="#00f2ff" intensity="2" position="-40 6 15" distance="10"></a-light>
+
+        <!-- Lamborghini Countach LPI 800-4 -->
+        <a-entity gltf-model="#lamborghini" position="25 5 35" scale="2 2 2" rotation="0 0 0" 
+                 material="color: #FF6600; metalness: 0.95; roughness: 0.05; envMap: #sky; envMapIntensity: 2"
+                 shadow="cast: true; receive: true"></a-entity>
+
+        <!-- Tree Clusters Along Side Walls - Private Estate -->
+        <!-- Left Wall Cluster 1 -->
+        <a-entity gltf-model="#tree" position="-45 3 10" scale="18 16 16" rotation="0 30 0" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="-48 3 8" scale="16 14 14" rotation="0 45 0" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="-42 3 12" scale="17 15 15" rotation="0 15 0" shadow="cast: true; receive: true"></a-entity>
+        
+        <!-- Left Wall Cluster 2 -->
+        <a-entity gltf-model="#tree" position="-45 3 35" scale="19 17 17" rotation="0 60 0" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="-48 3 33" scale="17 15 15" rotation="0 30 0" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="-42 3 37" scale="18 16 16" rotation="0 75 0" shadow="cast: true; receive: true"></a-entity>
+        
+        <!-- Right Wall Cluster 1 -->
+        <a-entity gltf-model="#tree" position="45 3 10" scale="18 16 16" rotation="0 -30 0" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="48 3 8" scale="16 14 14" rotation="0 -45 0" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="42 3 12" scale="17 15 15" rotation="0 -15 0" shadow="cast: true; receive: true"></a-entity>
+        
+        <!-- Right Wall Cluster 2 -->
+        <a-entity gltf-model="#tree" position="45 3 35" scale="19 17 17" rotation="0 -60 0" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="48 3 33" scale="17 15 15" rotation="0 -30 0" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="42 3 37" scale="18 16 16" rotation="0 -75 0" shadow="cast: true; receive: true"></a-entity>
+        
+        <!-- Decorative Bushes Near Villa -->
+        <a-sphere position="5 3.2 8" radius="0.8" color="#228B22" material="roughness: 0.9" shadow="cast: true; receive: true"></a-sphere>
+        <a-sphere position="15 3.2 12" radius="0.6" color="#2E7D32" material="roughness: 0.9" shadow="cast: true; receive: true"></a-sphere>
+        <a-sphere position="8 3.2 15" radius="0.7" color="#388E3C" material="roughness: 0.9" shadow="cast: true; receive: true"></a-sphere>
+        <a-sphere position="12 3.2 5" radius="0.5" color="#43A047" material="roughness: 0.9" shadow="cast: true; receive: true"></a-sphere>
+        <a-sphere position="18 3.2 8" radius="0.6" color="#4CAF50" material="roughness: 0.9" shadow="cast: true; receive: true"></a-sphere>
+        
+        <!-- Flower Details -->
+        <a-cylinder position="6 3.3 10" radius="0.1" height="0.3" color="#FF69B4" material="roughness: 0.3"></a-cylinder>
+        <a-cylinder position="14 3.3 13" radius="0.1" height="0.3" color="#FFB6C1" material="roughness: 0.3"></a-cylinder>
+        <a-cylinder position="9 3.3 14" radius="0.1" height="0.3" color="#FFC0CB" material="roughness: 0.3"></a-cylinder>
+        <a-cylinder position="16 3.3 6" radius="0.1" height="0.3" color="#FF1493" material="roughness: 0.3"></a-cylinder>
+        
+        <!-- Existing Property Trees -->
+        <!--Behind House - Left Corner-->
+        <a-entity gltf-model="#tree" position="-25 2.7 -20" scale="18 16 16" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="-35 3 -20" scale="20 18 18" shadow="cast: true; receive: true"></a-entity>
+        
+        <!--Behind House - Right Corner-->
+        <a-entity gltf-model="#tree" position="40 2.7 -20" scale="18 16 16" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="48 3 -20" scale="20 18 18" shadow="cast: true; receive: true"></a-entity>
+        
+        <!--In Front of House - Left Corner-->
+        <a-entity gltf-model="#tree" position="-45 2.7 25" scale="18 16 16" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="-48 3 25" scale="20 18 18" shadow="cast: true; receive: true"></a-entity>
+        
+        <!--In Front of House - Right Corner-->
+        <a-entity gltf-model="#tree" position="40 2.7 25" scale="18 16 16" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="48 3 25" scale="20 18 18" shadow="cast: true; receive: true"></a-entity>
+        
+        <!--Additional Trees Around Property -->
+        <a-entity gltf-model="#tree" position="-20 2.7 10" scale="15 13 13" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="30 2.7 8" scale="16 14 14" shadow="cast: true; receive: true"></a-entity>
+        <a-entity gltf-model="#tree" position="0 2.7 -30" scale="17 15 15" shadow="cast: true; receive: true"></a-entity>
+
+        <!--Swimming Model with Chairs - Bigger Scale (Behind House)-->
+        <a-entity gltf-model="#good" position="-15 4 -15" scale="1.5 1.5 1.5"></a-entity>
+        
+        <!--Perfect Pool Water - Bigger Inside Good Pool Basin (Behind House)-->
+        <a-entity position="-14 4 -14">
+            <a-ocean width="4.5" height="9" opacity="0.8" speed="0.15" density="50" color="#4A90E2"></a-ocean>
+        </a-entity>
+
+        <!--Street Lamps - All Behind House (Reduced Brightness)-->
+        <!--Middle Lamp Behind House-->
+        <a-entity gltf-model="#street" rotation="0 0 0" position="0 3 -20" scale="0.005 0.005 0.005" ></a-entity>
+            <a-light type="point" distance="20" color="#ff0" intensity="1.5" position="0 10 -20"></a-light>
+        
+        <!--Left Side Behind Lamp (Facing House)-->
+        <a-entity gltf-model="#lux" position="-20 2.9 -15" rotation="0 90 0" scale="0.10 0.10 0.10" ></a-entity>
+                <a-light type="point" distance="15" color="#ff0" intensity="1.5" position="-20 13 -15"></a-light>
+        
+        <!--Right Side Behind Lamp (Facing House)-->
+        <a-entity gltf-model="#circle" position="20 3 -10" rotation="0 270 0" scale="0.6 0.6 0.6" ></a-entity>
+                <a-light type="point" distance="8" color="#ff0" intensity="1.5" position="20 8 -10"></a-light>
+        
+        <!--Far Back Behind Lamp (Facing House)-->
+        <a-entity gltf-model="#circle" position="0 3 -25" rotation="0 180 0" scale="0.6 0.6 0.6" ></a-entity>
+                <a-light type="point" distance="8" color="#ff0" intensity="1.5" position="0 8 -25"></a-light>
+        
+        <!--Center Behind Lamp (Facing House)-->
+        <a-entity gltf-model="#street" rotation="0 180 0" position="10 3 -15" scale="0.005 0.005 0.005" ></a-entity>
+            <a-light type="point" distance="20" color="#ff0" intensity="0.3" position="10 10 -15"></a-light>
+
+        <!--Circle lamp at pool-->
+        <a-entity gltf-model="#circle" position="5 3.8 -6" scale="0.6 0.6 0.6" ></a-entity>
+            <!--Light source inside street-->
+            <a-light type="point" distance="7" color="#CECE" intensity="2" position="5 7 -7"></a-light>
+        
+        <!--Circle lamp at pool-->
+        <a-cylinder position="-5 6 -10" radius="0.5" height="0.2" color="#FFF"></a-cylinder>
+        <!--Light source inside street-->
+        <a-light type="point" distance="6" color="#ff3" intensity="3" position="-5 5 -10"></a-light>
+
+
+
+        <!-- Strong Sunlight Directional Light -->
+        <a-entity light="type:directional; color:#fffceb; intensity:1.5; position="-15 8 5" 
+                 shadow="cast: true; receive: true; shadowCamera: {left: -80; right: 80; top: 80; bottom: -80}; shadowMapSize: 4096"></a-entity>
+        
+        <!-- Ambient Light for Depth -->
+        <a-entity light="type:ambient; color:#87CEEB; intensity:0.6"></a-entity>
+
+    </a-scene>
+
+</body>
+
+</html>
